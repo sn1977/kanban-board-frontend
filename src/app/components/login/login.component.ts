@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
+import { AuthService } from "../../services/auth.service";
+
 
 @Component({
     selector: "app-login",
@@ -12,25 +14,16 @@ export class LoginComponent {
     username: string = "";
     password: string = "";
 
+    constructor(private authService: AuthService) {}
+
     async login() {
-        const myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        const raw = JSON.stringify({
-            username: this.username,
-            password: this.password,
-        });
-
-        const requestOptions: RequestInit = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-        };
         try {
-            let resp = await fetch("http://127.0.0.1:8000/login/", requestOptions);
-            let json = await resp.json();
-            localStorage.setItem("token", json.token);
+            let resp = await this.authService.loginWithUsernameAndPassword(
+                this.username,
+                this.password
+            );
+            console.log(resp);
+            
             //TODO - redirect to board page
         } catch (error) {
             console.log(error);
