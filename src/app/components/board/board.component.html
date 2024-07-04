@@ -1,1 +1,5 @@
-<p>board works!</p>
+<h1>{{ error }}</h1>
+<div *ngFor="let ticket of tickets">
+    <!-- <input type="checkbox" [checked]="false" /> -->
+    {{ ticket.title }}
+</div>

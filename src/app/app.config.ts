@@ -6,17 +6,18 @@ import {
 import { provideRouter } from "@angular/router";
 
 import { routes } from "./app.routes";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from "@angular/common/http";
+import { AuthInterceptorService } from "./services/auth-interceptor.service";
 
 export const appConfig: ApplicationConfig = {
-    // providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes)]
     providers: [
         provideRouter(routes),
         importProvidersFrom(HttpClientModule, HttpClient),
-        // {
-        //     provide: HTTP_INTERCEPTORS,
-        //     // useClass: AuthInterceptorService,
-        //     multi: true,
-        // },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptorService,
+            multi: true,
+        },
     ],
 };
+

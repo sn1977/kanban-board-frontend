@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { AuthService } from "../../services/auth.service";
-
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-login",
@@ -14,18 +14,19 @@ export class LoginComponent {
     username: string = "";
     password: string = "";
 
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService, private router: Router) {}
 
     async login() {
         try {
-            let resp = await this.authService.loginWithUsernameAndPassword(
+            let resp: any = await this.authService.loginWithUsernameAndPassword(
                 this.username,
                 this.password
             );
             console.log(resp);
-            
-            //TODO - redirect to board page
+            localStorage.setItem("token", resp.token);
+            this.router.navigate(["board"]);
         } catch (error) {
+            alert('Login Failed');
             console.log(error);
         }
         //TODO - disable input fields & button and enable after try catch block is done
