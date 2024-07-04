@@ -1,15 +1,31 @@
-<form (ngSubmit)="login()">
-    <input
-        type="username"
-        placeholder="Username"
-        name="username"
-        [(ngModel)]="username"
-        required />
-    <input
-        type="password"
-        placeholder="Password"
-        name="password"
-        [(ngModel)]="password"
-        required />
-    <button>Login</button>
-</form>
+<div class="login">
+    <div class="login-card">
+        <form (ngSubmit)="login()">
+            <div class="form-floating mb-3">
+                <input
+                    type="username"
+                    class="form-control"
+                    id="floatingInput"
+                    placeholder="Username"
+                    name="username"
+                    [(ngModel)]="username"
+                    required/>
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    type="password"
+                    class="form-control"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    name="password"
+                    [(ngModel)]="password"
+                    required />
+                <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -13,6 +13,9 @@ import { CommonModule, NgFor } from "@angular/common";
 })
 export class BoardComponent {
     tickets: any = [];
+    progressTickets: any = [];
+    feedbackTickets: any = [];
+    doneTickets: any = [];
     error = "";
 
     constructor(private http: HttpClient) {}
@@ -30,5 +33,21 @@ export class BoardComponent {
     getTickets() {
         const url = environment.baseUrl + "/tickets/";
         return lastValueFrom(this.http.get(url));
+    }
+
+    toggleNewTaskOverlay() {
+        console.log("toggleNewTaskOverlay");
+    }
+
+    toggleEditTaskOverlay(tickets:any) {
+        console.log("toggleEditTaskOverlay");
+    }
+
+    toggleDeleteTaskOverlay(tickets:any) {
+        console.log("toggleDeleteTaskOverlay");
+    }
+
+    getCardBackgroundColor(tickets:any) {
+        console.log("getCardBackgroundColor");
     }
 }

@@ -1,0 +1,85 @@
+.board {
+  width: 100vw;
+  // max-width: calc(1920px - 1rem);
+  height: calc(100vh - 65px - 1rem);
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 1rem;
+
+  .column {
+    width: 25%;
+    border: dashed var(--color-fourth);
+    margin: 1rem 0;
+    padding: 0.5rem;
+    .headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      h2 {
+        text-align: center;
+        margin: unset;
+      }
+      button {
+        font-size: 1rem;
+      }
+    }
+    .column-container--tasks {
+      height: calc(100% - 60px - 0.5rem);
+      width: calc(100% + 0.5rem);
+      overflow: auto;
+      ul {
+        list-style: none;
+        padding: 0;
+        width: calc(100% - 0.5rem);
+      }
+    }
+  }
+}
+
+li {
+  margin-bottom: 0.5rem;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  .card-title {
+    padding: 0.5rem 1rem 0 1rem;
+  }
+}
+
+.card-body {
+  padding: 0 1rem 1rem 1rem;
+  .card-body--section {
+    margin-bottom: 0.5rem;
+    p {
+      margin: unset;
+    }
+    .card-text--info {
+      font-size: 0.8rem;
+      min-width: 45%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+.card-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  :first-child {
+    margin-right: 0.5rem;
+  }
+}
+
+.card-text {
+  padding: 0 1rem;
+}
+
+.btn-card {
+  border: 1px solid var(--bg-overlay);
+  min-width: 45%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

@@ -1,0 +1,30 @@
+@import "../../../styles/mixins.scss";
+
+.login {
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
+    height: 100vh;
+    background: #588895;
+}
+
+.login-card {
+    @include card($w: 50%, $h: 30%, $br: 30px, $ptb: 35px, $plr: 20px);
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
+}
+
+form {
+    @include dFlex($jc: center, $ai: center, $fd: column, $g: 15px);
+    width: 100%;
+
+    div {
+        width: 100%;
+    }
+
+    input {
+        border: solid 2.5px #588895;
+    }
+
+    button {
+        background: #588895;
+        border-color: #588895;
+    }
+}
