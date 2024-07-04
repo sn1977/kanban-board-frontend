@@ -5,7 +5,7 @@
   <div class="column">
     <div class="headline">
       <h2>Todos</h2>
-      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary">
+      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary btn-individual">
         +
       </button>
     </div>
@@ -21,8 +21,8 @@
           <div class="card-body">
             <div class="card-body--section">
               <p class="card-text--info">
-                <span>Erstell von: </span
-                ><span>{{ ticket.author_username }}</span>
+                <span>Erstellt von: </span>
+                <span>{{ ticket.created_by }}</span>
               </p>
               <p class="card-text--info">
                 <span>Erstellt am: </span><span>{{ ticket.created_at }}</span>
