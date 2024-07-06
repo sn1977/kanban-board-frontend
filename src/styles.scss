@@ -1,5 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --bg-overlay: rgba(0, 0, 0, 0.4);
+    // --bg-color: rgb(232, 230, 230);
+    --bg-color: var(--color-third);
+    --card-bg-red: rgba(255, 0, 0, 0.4);
+    --card-bg-green: rgba(60, 179, 113, 0.4);
+    --card-bg-blue: rgba(0, 0, 255, 0.4);
+    --card-bg-yellow: rgba(255, 165, 0, 0.4);
+    --card-bg-cyan: rgba(0, 255, 255, 0.4);
+
+    /*Color space palette:*/
+    --color-main: #a3bccb; // Hellere Variante von #588895
+    --color-second: #895858; // Komplementärfarbe von #588895
+    --color-third: #b58a58; // Akzentfarbe von #588895
+    --color-fourth: #d9d9d9; // Neutrale Farbe
+    --card-fifth: #84202a;
+}
+
+html {
+    background: var(--color-main);
+}
+
 .btn-individual {
-  background: #588895 !important;
-  border-color: #588895 !important;
+    background: #588895 !important;
+    border-color: #588895 !important;
+
+    &:hover {
+        background: var(--color-third) !important;
+        border-color: var(--color-third) !important;
+    }
+}
+
+.btn-individual--delete {
+    background: var(--color-second) !important;
+    border-color: var(--color-second) !important;
+
+    &:hover {
+        background: var(--card-fifth) !important;
+        border-color: var(--card-fifth) !important;
+    }
 }
