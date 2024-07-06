@@ -3,13 +3,15 @@ import { Component } from "@angular/core";
 import { environment } from "../../../environments/environment";
 import { lastValueFrom } from "rxjs";
 import { CommonModule, NgFor } from "@angular/common";
+import { OverlayService } from "../../services/overlay.service";
+import { TicketFormComponent } from "../ticket-form/ticket-form.component";
 
 @Component({
     selector: "app-board",
     standalone: true,
-    imports: [NgFor],
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.scss",
+    imports: [NgFor, TicketFormComponent, CommonModule],
 })
 export class BoardComponent {
     tickets: any = [];
@@ -17,10 +19,18 @@ export class BoardComponent {
     feedbackTickets: any = [];
     doneTickets: any = [];
     error = "";
+    showOverlay: boolean = false;
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private overlayService: OverlayService
+    ) {}
 
     async ngOnInit(): Promise<void> {
+        this.overlayService.displayOverlay$.subscribe((show) => {
+            this.showOverlay = show;
+        });
+
         try {
             this.tickets = await this.getTickets();
             console.log(this.tickets);
@@ -35,19 +45,20 @@ export class BoardComponent {
         return lastValueFrom(this.http.get(url));
     }
 
-    toggleNewTaskOverlay() {
-        console.log("toggleNewTaskOverlay");
+    toggleNewTicketOverlay() {
+        console.log("toggleNewTicketOverlay");
+        this.overlayService.showOverlay();
     }
 
-    toggleEditTaskOverlay(tickets:any) {
+    toggleEditTicketOverlay(tickets: any) {
         console.log("toggleEditTaskOverlay");
     }
 
-    toggleDeleteTaskOverlay(tickets:any) {
-        console.log("toggleDeleteTaskOverlay");
+    toggleDeleteTicketOverlay(tickets: any) {
+        console.log("toggleDeleteTicketOverlay");
     }
 
-    getCardBackgroundColor(tickets:any) {
+    getCardBackgroundColor(tickets: any) {
         console.log("getCardBackgroundColor");
     }
 }

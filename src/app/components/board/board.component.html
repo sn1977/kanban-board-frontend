@@ -5,7 +5,7 @@
   <div class="column">
     <div class="headline">
       <h2>Todos</h2>
-      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary btn-individual">
+      <button (click)="toggleNewTicketOverlay()" class="btn btn-primary btn-individual">
         +
       </button>
     </div>
@@ -40,13 +40,13 @@
 
             <div class="card-row">
               <button
-                (click)="toggleEditTaskOverlay(ticket)"
+                (click)="toggleEditTicketOverlay(ticket)"
                 class="btn btn-primary btn-card btn-individual"
               >
                 Bearbeiten
               </button>
               <button
-                (click)="toggleDeleteTaskOverlay(ticket.id)"
+                (click)="toggleDeleteTicketOverlay(ticket.id)"
                 class="btn btn-danger btn-card btn-individual--delete"
               >
                 Löschen
@@ -61,7 +61,7 @@
   <div class="column">
     <div class="headline">
       <h2>In progress</h2>
-      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary btn-individual">
+      <button (click)="toggleNewTicketOverlay()" class="btn btn-primary btn-individual">
         +
       </button>
     </div>
@@ -95,13 +95,13 @@
             </div>
             <div class="card-row">
               <button
-                (click)="toggleEditTaskOverlay(ticket)"
+                (click)="toggleEditTicketOverlay(ticket)"
                 class="btn btn-primary btn-card btn-individual"
               >
                 Bearbeiten
               </button>
               <button
-                (click)="toggleDeleteTaskOverlay(ticket.id)"
+                (click)="toggleDeleteTicketOverlay(ticket.id)"
                 class="btn btn-danger btn-card btn-individual--delete"
               >
                 Löschen
@@ -116,7 +116,7 @@
   <div class="column">
     <div class="headline">
       <h2>Feedback</h2>
-      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary btn-individual">
+      <button (click)="toggleNewTicketOverlay()" class="btn btn-primary btn-individual">
         +
       </button>
     </div>
@@ -132,7 +132,7 @@
           <div class="card-body">
             <div class="card-body--section">
               <p class="card-text--info">
-                <span>Erstell von: </span
+                <span>Erstellt von: </span
                 ><span>{{ ticket.author_username }}</span>
               </p>
               <p class="card-text--info">
@@ -150,13 +150,13 @@
             </div>
             <div class="card-row">
               <button
-                (click)="toggleEditTaskOverlay(ticket)"
+                (click)="toggleEditTicketOverlay(ticket)"
                 class="btn btn-primary btn-card btn-individual"
               >
                 Bearbeiten
               </button>
               <button
-                (click)="toggleDeleteTaskOverlay(ticket.id)"
+                (click)="toggleDeleteTicketOverlay(ticket.id)"
                 class="btn btn-danger btn-card btn-individual--delete"
               >
                 Löschen
@@ -171,7 +171,7 @@
   <div class="column">
     <div class="headline">
       <h2>Done</h2>
-      <button (click)="toggleNewTaskOverlay()" class="btn btn-primary btn-individual">
+      <button (click)="toggleNewTicketOverlay()" class="btn btn-primary btn-individual">
         +
       </button>
     </div>
@@ -187,7 +187,7 @@
           <div class="card-body">
             <div class="card-body--section">
               <p class="card-text--info">
-                <span>Erstell von: </span
+                <span>Erstellt von: </span
                 ><span>{{ ticket.author_username }}</span>
               </p>
               <p class="card-text--info">
@@ -205,13 +205,13 @@
             </div>
             <div class="card-row">
               <button
-                (click)="toggleEditTaskOverlay(ticket)"
+                (click)="toggleEditTicketOverlay(ticket)"
                 class="btn btn-primary btn-card btn-individual"
               >
                 Bearbeiten
               </button>
               <button
-                (click)="toggleDeleteTaskOverlay(ticket.id)"
+                (click)="toggleDeleteTicketOverlay(ticket.id)"
                 class="btn btn-danger btn-card btn-individual--delete"
               >
                 Löschen
@@ -223,6 +223,10 @@
     </div>
   </div>
 </div>
+
+<!-- <div *ngIf="showOverlay"> -->
+  <app-ticket-form *ngIf="showOverlay"></app-ticket-form>
+<!-- </div> -->
 
 <!-- <app-task-form
   *ngIf="overlayNewTaskState || overlayEditTaskState"

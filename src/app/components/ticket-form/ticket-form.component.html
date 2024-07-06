@@ -1,0 +1,41 @@
+<div class="overlay">
+    <div class="ticket-card">
+        <div class="form-floating mb-3">
+            <input
+                type="text"
+                class="form-control"
+                id="floatingInputDisabled"
+                placeholder="title" />
+            <label for="floatingInputDisabled">Title</label>
+            <!-- // TODO - do I need the id? -->
+        </div>
+        <div class="form-floating mb-3">
+            <textarea
+                class="form-control"
+                placeholder="Description"
+                id="floatingTextareaDisabled"
+                style="height: 200px"></textarea>
+            <label for="floatingTextareaDisabled">Description</label>
+        </div>
+        <div class="form-floating">
+            <select
+                class="form-select"
+                id="floatingSelectDisabled"
+                aria-label="Floating label disabled select example">
+                <option value="1">Low</option>
+                <option value="2">Middle</option>
+                <option value="3">High</option>
+            </select>
+            <label for="floatingSelectDisabled">Priority</label>
+        </div>
+        <div class="form-floating">
+          <input
+              type="text"
+              class="form-control"
+              id="datepicker"
+              bsDatepicker
+              placeholder="Select date" />
+          <label for="datepicker">Due Date</label>
+      </div>
+    </div>
+</div>
