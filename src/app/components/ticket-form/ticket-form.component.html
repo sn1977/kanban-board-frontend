@@ -17,7 +17,7 @@
                 style="height: 200px"></textarea>
             <label for="floatingTextareaDisabled">Description</label>
         </div>
-        <div class="form-floating">
+        <div class="form-floating mb-3">
             <select
                 class="form-select"
                 id="floatingSelectDisabled"
@@ -28,14 +28,23 @@
             </select>
             <label for="floatingSelectDisabled">Priority</label>
         </div>
-        <div class="form-floating">
-          <input
-              type="text"
-              class="form-control"
-              id="datepicker"
-              bsDatepicker
-              placeholder="Select date" />
-          <label for="datepicker">Due Date</label>
-      </div>
+        <div class="form-floating mb-3">
+            <input
+                type="text"
+                class="form-control"
+                id="datepicker"
+                bsDatepicker
+                [(ngModel)]="dueDate"
+                placeholder="Select date" />
+            <label for="datepicker">Due Date</label>
+        </div>
+        <div class="card-row">
+            <button class="btn btn-primary btn-card btn-individual">
+                Speichern
+            </button>
+            <button class="btn btn-danger btn-card btn-individual--delete">
+                Cancel
+            </button>
+        </div>
     </div>
 </div>

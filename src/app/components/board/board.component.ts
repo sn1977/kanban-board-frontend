@@ -62,3 +62,4 @@ export class BoardComponent {
         console.log("getCardBackgroundColor");
     }
 }
+
