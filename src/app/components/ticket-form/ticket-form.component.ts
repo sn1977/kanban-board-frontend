@@ -26,5 +26,9 @@ export class TicketFormComponent implements OnInit {
             this.showOverlay = show;
         });
     }
+
+    cancel() {
+        this.overlayService.hideOverlay();
+    }
 }
 
