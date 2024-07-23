@@ -27,7 +27,7 @@ export class LoginComponent {
             this.router.navigate(["board"]);
         } catch (error) {
             alert('Login Failed');
-            console.log(error);
+            console.error(error);
         }
         //TODO - disable input fields & button and enable after try catch block is done
     }
