@@ -1,4 +1,5 @@
 import {
+  HttpErrorResponse,
     HttpEvent,
     HttpHandler,
     HttpInterceptor,
@@ -30,10 +31,12 @@ export class AuthInterceptorService implements HttpInterceptor {
         // Leite die Anfrage weiter, unabhängig davon, ob ein Token vorhanden ist oder nicht
         return next.handle(request).pipe(
             catchError((err) => {
+              if (err instanceof HttpErrorResponse) { //NOTE - evtl. nicht nötig!!!!
                 if (err.status === 401) {
                     // Wenn der Fehlerstatus 401 ist, navigiere zur Login-Seite
                     this.router.navigate(["login"]);
                 }
+              }
                 return throwError(() => err);
             })
         );
