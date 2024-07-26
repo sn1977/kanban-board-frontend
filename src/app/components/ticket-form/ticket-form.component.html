@@ -1,4 +1,4 @@
-<div class="overlay">
+<!-- <div class="overlay">
     <div class="ticket-card">
         <div class="form-floating mb-3">
             <input
@@ -7,9 +7,9 @@
                 id="floatingInputDisabled"
                 placeholder="title"
                 [(ngModel)]="ticket.title" />
-            <label for="floatingInputDisabled">Title</label>
+            <label for="floatingInputDisabled">Title</label> -->
             <!-- // TODO - do I need the id? -->
-        </div>
+        <!-- </div>
         <div class="form-floating mb-3">
             <textarea
                 class="form-control"
@@ -50,4 +50,68 @@
             </button>
         </div>
     </div>
+</div> -->
+
+
+<div class="overlay">
+  <div class="ticket-card">
+      <form (ngSubmit)="onSubmit()" #ticketForm="ngForm">
+          <div class="form-floating mb-3">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="floatingInputDisabled"
+                  placeholder="title"
+                  [(ngModel)]="ticket.title"
+                  name="title"
+                  required />
+              <label for="floatingInputDisabled">Title</label>
+          </div>
+          <div class="form-floating mb-3">
+              <textarea
+                  class="form-control"
+                  placeholder="Description"
+                  id="floatingTextareaDisabled"
+                  style="height: 200px"
+                  [(ngModel)]="ticket.description"
+                  name="description"
+                  required></textarea>
+              <label for="floatingTextareaDisabled">Description</label>
+          </div>
+          <div class="form-floating mb-3">
+              <select
+                  class="form-select"
+                  id="floatingSelectDisabled"
+                  aria-label="Floating label disabled select example"
+                  [(ngModel)]="ticket.priority"
+                  name="priority"
+                  required>
+                  <option value="Low">Low</option>
+                  <option value="Middle">Middle</option>
+                  <option value="High">High</option>
+              </select>
+              <label for="floatingSelectDisabled">Priority</label>
+          </div>
+          <div class="form-floating mb-3">
+              <input
+                  type="text"
+                  class="form-control"
+                  id="datepicker"
+                  bsDatepicker
+                  [(ngModel)]="ticket.dueDate"
+                  name="dueDate"
+                  placeholder="Select date"
+                  required />
+              <label for="datepicker">Due Date</label>
+          </div>
+          <div class="card-row">
+              <button class="btn btn-primary btn-card btn-individual" type="submit">
+                  Speichern
+              </button>
+              <button class="btn btn-danger btn-card btn-individual--delete" type="button" (click)="cancel()">
+                  Cancel
+              </button>
+          </div>
+      </form>
+  </div>
 </div>

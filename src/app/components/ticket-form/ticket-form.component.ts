@@ -25,7 +25,11 @@ export class TicketFormComponent implements OnInit {
       title: '',
       description: '',
       priority: '',
-      dueDate: new Date()
+      dueDate: new Date(),
+      column_id: 1,
+      created_by: '',
+      created_by_username: '',
+      created_at: ''
     };
 
     constructor(private overlayService: OverlayService, private http: HttpClient) {}
@@ -36,13 +40,13 @@ export class TicketFormComponent implements OnInit {
         });
     }
 
-    saveTicket() {
-      this.http.post('api/tickets/create/', this.ticket).subscribe(response => {
-        console.log('Ticket saved', response);
-      }, error => {
-        console.error('Error saving ticket', error);
-      });
-    }
+    // saveTicket() {
+    //   this.http.post('api/tickets/create/', this.ticket).subscribe(response => {
+    //     console.log('Ticket saved', response);
+    //   }, error => {
+    //     console.error('Error saving ticket', error);
+    //   });
+    // }
 
     // saveTicket() {
     //   let ticket = {};
@@ -51,6 +55,16 @@ export class TicketFormComponent implements OnInit {
     //   console.log(ticket);
       
     // }
+
+    onSubmit() {
+      console.log('Submitting ticket:', this.ticket);
+      // this.ticket.column_id = this.columnId; // Setze column_id vor dem Speichern
+      this.http.post('tickets/', this.ticket).subscribe(response => {
+          console.log('Ticket saved', response);
+      }, error => {
+          console.error('Error saving ticket', error);
+      });
+  }
 
     cancel() {
         this.overlayService.hideOverlay();

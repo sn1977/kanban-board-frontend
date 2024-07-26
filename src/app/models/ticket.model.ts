@@ -15,4 +15,8 @@ export interface Ticket {
   description: string;
   priority: string;
   dueDate: Date;
+  created_at: string;
+  column_id: number;
+  created_by: string;
+  created_by_username: string;
 }
