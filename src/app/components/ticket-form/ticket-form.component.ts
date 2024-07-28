@@ -3,7 +3,7 @@ import { OverlayService } from "../../services/overlay.service";
 import { CommonModule } from "@angular/common";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule } from "@angular/forms";
-import { Ticket } from "../../models/ticket.model";
+import { TicketInterface } from "../../models/ticket.model";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -21,7 +21,7 @@ export class TicketFormComponent implements OnInit {
     showOverlay: boolean = false;
     dueDate: Date = new Date();
 
-    ticket: Ticket = {
+    ticket: TicketInterface = {
       title: '',
       description: '',
       priority: '',
