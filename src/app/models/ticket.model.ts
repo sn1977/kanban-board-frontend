@@ -10,7 +10,7 @@
 // }
 
 // ticket.model.ts
-export interface Ticket {
+export interface TicketInterface {
   title: string;
   description: string;
   priority: string;
