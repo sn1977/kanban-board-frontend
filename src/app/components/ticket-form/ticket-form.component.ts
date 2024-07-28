@@ -19,17 +19,16 @@ import { HttpClient } from "@angular/common/http";
 })
 export class TicketFormComponent implements OnInit {
     showOverlay: boolean = false;
-    dueDate: Date = new Date();
 
     ticket: TicketInterface = {
       title: '',
       description: '',
       priority: '',
-      dueDate: new Date(),
+      due_Date: new Date().toISOString().split('T')[0],
       column_id: 1,
       created_by: '',
       created_by_username: '',
-      created_at: ''
+      created_at: new Date().toISOString().split('T')[0]
     };
 
     constructor(private overlayService: OverlayService, private http: HttpClient) {}
@@ -40,13 +39,26 @@ export class TicketFormComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    async onSubmit() {
+      // Konvertiere dueDate in einen ISO-String
+      if (typeof this.ticket.due_Date === 'object' && (this.ticket.due_Date as any) instanceof Date) {
+        this.ticket.due_Date = (this.ticket.due_Date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
+    }
+
+      // TODO: in Service aufrufen
       console.log('Submitting ticket:', this.ticket);
+
+      // Entferne die Felder created_by und created_by_username, da sie im Backend gesetzt werden
+      const { created_by, created_by_username, ...ticketData } = this.ticket;
+      
       // this.ticket.column_id = this.columnId; // Setze column_id vor dem Speichern
-      this.http.post('http://127.0.0.1:8000/api/tickets/create/', this.ticket).subscribe(response => {
-          console.log('Ticket saved', response);
-      }, error => {
-          console.error('Error saving ticket', error);
+      this.http.post('http://127.0.0.1:8000/api/tickets/create/', ticketData).subscribe({
+          next: response => {
+              console.log('Ticket saved', response);
+          },
+          error: error => {
+              console.error('Error saving ticket', error);
+          }
       });
   }
 
