@@ -45,32 +45,30 @@ export class TicketFormComponent implements OnInit {
         this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
     }
 
+    // Holen der user_id und des Benutzernamens aus dem lokalen Speicher
+    this.ticket.created_by = localStorage.getItem('user_id') || '';
+    this.ticket.created_by_username = localStorage.getItem('username') || '';
+
       // TODO: in Service aufrufen
       console.log('Submitting ticket:', this.ticket);
 
-      // Entferne die Felder created_by und created_by_username, da sie im Backend gesetzt werden
-      const { created_by, created_by_username, ...ticketData } = this.ticket;
-
       const token = localStorage.getItem('token');  // Token aus dem lokalen Speicher holen
       const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Token ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`
       });
-      
-      // this.ticket.column_id = this.columnId; // Setze column_id vor dem Speichern
-      // this.http.post('http://127.0.0.1:8000/api/tickets/create/', ticketData).subscribe({
-      //     next: response => {
-      //         console.log('Ticket saved', response);
-      //     }da      //     error: error => {
-      //         console.error('Error saving ticket', error);
-      //     }
-      // });
 
-      await this.http.post('http://127.0.0.1:8000/api/tickets/create/', JSON.stringify(ticketData), { headers }).subscribe(response => {
-        console.log('Ticket saved', response);
-    }, error => {
-        console.error('Error saving ticket', error);
-    });
+      await this.http.post('http://127.0.0.1:8000/api/tickets/create/', JSON.stringify(this.ticket), { headers }).subscribe({
+          next: (response) => {
+              console.log('Ticket saved', response);
+          },
+          error: (error) => {
+              console.error('Error saving ticket', error);
+              if (error.error) {
+                  console.error('Backend error details:', error.error);
+              }
+          }
+      });
   }
 
     cancel() {

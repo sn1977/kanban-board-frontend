@@ -24,6 +24,8 @@ export class LoginComponent {
             );
             console.log(resp);
             localStorage.setItem("token", resp.token);
+            localStorage.setItem("user_id", resp.user_id);  // Speichern der user_id
+            localStorage.setItem("username", resp.username);  // Speichern des Benutzernamens
             this.router.navigate(["board"]);
         } catch (error) {
             alert('Login Failed');
