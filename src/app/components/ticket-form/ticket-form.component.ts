@@ -4,7 +4,7 @@ import { CommonModule } from "@angular/common";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { FormsModule } from "@angular/forms";
 import { TicketInterface } from "../../models/ticket.model";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
     selector: "app-ticket-form",
@@ -24,7 +24,7 @@ export class TicketFormComponent implements OnInit {
       title: '',
       description: '',
       priority: '',
-      due_Date: new Date().toISOString().split('T')[0],
+      due_date: new Date().toISOString().split('T')[0],
       column_id: 1,
       created_by: '',
       created_by_username: '',
@@ -41,8 +41,8 @@ export class TicketFormComponent implements OnInit {
 
     async onSubmit() {
       // Konvertiere dueDate in einen ISO-String
-      if (typeof this.ticket.due_Date === 'object' && (this.ticket.due_Date as any) instanceof Date) {
-        this.ticket.due_Date = (this.ticket.due_Date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
+      if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
+        this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
     }
 
       // TODO: in Service aufrufen
@@ -50,16 +50,27 @@ export class TicketFormComponent implements OnInit {
 
       // Entferne die Felder created_by und created_by_username, da sie im Backend gesetzt werden
       const { created_by, created_by_username, ...ticketData } = this.ticket;
+
+      const token = localStorage.getItem('token');  // Token aus dem lokalen Speicher holen
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      });
       
       // this.ticket.column_id = this.columnId; // Setze column_id vor dem Speichern
-      this.http.post('http://127.0.0.1:8000/api/tickets/create/', ticketData).subscribe({
-          next: response => {
-              console.log('Ticket saved', response);
-          },
-          error: error => {
-              console.error('Error saving ticket', error);
-          }
-      });
+      // this.http.post('http://127.0.0.1:8000/api/tickets/create/', ticketData).subscribe({
+      //     next: response => {
+      //         console.log('Ticket saved', response);
+      //     }da      //     error: error => {
+      //         console.error('Error saving ticket', error);
+      //     }
+      // });
+
+      await this.http.post('http://127.0.0.1:8000/api/tickets/create/', JSON.stringify(ticketData), { headers }).subscribe(response => {
+        console.log('Ticket saved', response);
+    }, error => {
+        console.error('Error saving ticket', error);
+    });
   }
 
     cancel() {
