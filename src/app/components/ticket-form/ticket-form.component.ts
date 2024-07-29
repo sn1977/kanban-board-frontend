@@ -25,11 +25,12 @@ export class TicketFormComponent implements OnInit {
       description: '',
       priority: '',
       due_date: new Date().toISOString().split('T')[0],
-      column_id: 1,
-      created_by: '',
-      created_by_username: '',
+      column_id: '',
+      created_by: localStorage.getItem('user_id') || '',
+      created_by_username: localStorage.getItem('username') || '',
       created_at: new Date().toISOString().split('T')[0]
     };
+columns: any;
 
     constructor(private overlayService: OverlayService, private http: HttpClient) {}
 
@@ -45,9 +46,9 @@ export class TicketFormComponent implements OnInit {
         this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
     }
 
-    // Holen der user_id und des Benutzernamens aus dem lokalen Speicher
-    this.ticket.created_by = localStorage.getItem('user_id') || '';
-    this.ticket.created_by_username = localStorage.getItem('username') || '';
+    // // Holen der user_id und des Benutzernamens aus dem lokalen Speicher
+    // this.ticket.created_by = localStorage.getItem('user_id') || '';
+    // this.ticket.created_by_username = localStorage.getItem('username') || '';
 
       // TODO: in Service aufrufen
       console.log('Submitting ticket:', this.ticket);
@@ -61,6 +62,8 @@ export class TicketFormComponent implements OnInit {
       await this.http.post('http://127.0.0.1:8000/api/tickets/create/', JSON.stringify(this.ticket), { headers }).subscribe({
           next: (response) => {
               console.log('Ticket saved', response);
+              this.cancel();
+              this.reloadPage();
           },
           error: (error) => {
               console.error('Error saving ticket', error);
@@ -73,6 +76,10 @@ export class TicketFormComponent implements OnInit {
 
     cancel() {
         this.overlayService.hideOverlay();
+    }
+
+    reloadPage() {
+        window.location.reload();
     }
 }
 

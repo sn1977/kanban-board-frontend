@@ -4,7 +4,7 @@ export interface TicketInterface {
   priority: string;
   due_date: string;
   created_at: string;
-  column_id: number;
+  column_id: string;
   created_by: string;
   created_by_username: string;
 }
