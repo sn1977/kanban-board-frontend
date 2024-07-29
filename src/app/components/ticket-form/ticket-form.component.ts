@@ -42,9 +42,9 @@ export class TicketFormComponent implements OnInit {
     }
 
     async onSubmit() {
-      // Konvertiere dueDate in einen ISO-String
+      // Konvertiere due_date in einen ISO-String und stelle sicher, dass das Format YYYY-MM-DD ist
       if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
-        this.ticket.due_date.toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
+        this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
     }
 
       // TODO: in Service aufrufen
