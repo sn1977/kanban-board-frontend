@@ -15,6 +15,7 @@ import { TicketFormComponent } from "../ticket-form/ticket-form.component";
 })
 export class BoardComponent {
     tickets: any = [];
+    todoTickets: any = [];
     progressTickets: any = [];
     feedbackTickets: any = [];
     doneTickets: any = [];
@@ -33,6 +34,7 @@ export class BoardComponent {
 
         try {
             this.tickets = await this.getTickets();
+            this.filterTicketsByColumn();
             console.log(this.tickets);
         } catch (error) {
             this.error = "Fehler beim Laden!";
@@ -58,8 +60,16 @@ export class BoardComponent {
         console.log("toggleDeleteTicketOverlay");
     }
 
-    getCardBackgroundColor(tickets: any) {
+    getCardBackgroundColor(color: string) {
         console.log("getCardBackgroundColor");
+        return color;
     }
+
+    filterTicketsByColumn() {
+      this.todoTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-todo');
+      this.progressTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-progress');
+      this.feedbackTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-feedback');
+      this.doneTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-done');
+  }
 }
 

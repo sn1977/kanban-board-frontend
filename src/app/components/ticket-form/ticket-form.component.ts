@@ -29,7 +29,8 @@ export class TicketFormComponent implements OnInit {
       column_id: '',
       created_by: localStorage.getItem('user_id') || '',
       created_by_username: localStorage.getItem('username') || '',
-      created_at: new Date().toISOString().split('T')[0]
+      created_at: new Date().toISOString().split('T')[0],
+      color: ''
     };
 
 
@@ -42,6 +43,9 @@ export class TicketFormComponent implements OnInit {
     }
 
     async onSubmit() {
+      // Setze die Farbe basierend auf der Priorität
+      this.setColorBasedOnPriority();
+
       // Konvertiere due_date in einen ISO-String und stelle sicher, dass das Format YYYY-MM-DD ist
       if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
         this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
@@ -70,6 +74,24 @@ export class TicketFormComponent implements OnInit {
           }
       });
   }
+
+  setColorBasedOnPriority() {
+    switch (this.ticket.priority) {
+        case 'Low':
+            this.ticket.color = 'white';
+            break;
+        case 'Middle':
+            this.ticket.color = 'var(--color-fifth)';
+            break;
+        case 'High':
+            this.ticket.color = 'var(--color-third)';
+            break;
+        default:
+            this.ticket.color = 'white'; 
+            break;
+    }
+}
+
 
     cancel() {
         this.overlayService.hideOverlay();

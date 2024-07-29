@@ -12,10 +12,10 @@
     <div class="column-container--tasks">
       <ul id="column-todo">
         <li
-          *ngFor="let ticket of tickets"
+          *ngFor="let ticket of todoTickets"
+          [style.backgroundColor]="getCardBackgroundColor(ticket.color)"
+          class="card"
           >
-          <!-- [style.backgroundColor]="getCardBackgroundColor(ticket.color)"
-          class="card" -->
           <h5 class="card-title">{{ ticket.title }}</h5>
           <p class="card-text">{{ ticket.description }}</p>
           <div class="card-body">

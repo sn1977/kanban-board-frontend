@@ -7,4 +7,5 @@ export interface TicketInterface {
   column_id: string;
   created_by: string;
   created_by_username: string;
+  color: string;
 }
