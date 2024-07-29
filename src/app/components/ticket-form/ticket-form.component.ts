@@ -31,7 +31,7 @@ export class TicketFormComponent implements OnInit {
       created_by_username: localStorage.getItem('username') || '',
       created_at: new Date().toISOString().split('T')[0]
     };
-columns: any;
+
 
     constructor(private overlayService: OverlayService, private http: HttpClient) {}
 

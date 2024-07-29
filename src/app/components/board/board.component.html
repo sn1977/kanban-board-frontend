@@ -10,7 +10,7 @@
       </button>
     </div>
     <div class="column-container--tasks">
-      <ul id="board-column-todo">
+      <ul id="column-todo">
         <li
           *ngFor="let ticket of tickets"
           >
@@ -66,7 +66,7 @@
       </button>
     </div>
     <div class="column-container--tasks">
-      <ul id="board-column-progress">
+      <ul id="column-progress">
         <li
           *ngFor="let ticket of progressTickets"
           [style.backgroundColor]="getCardBackgroundColor(ticket.color)"
@@ -121,7 +121,7 @@
       </button>
     </div>
     <div class="column-container--tasks">
-      <ul id="board-column-feedback">
+      <ul id="column-feedback">
         <li
           *ngFor="let ticket of feedbackTickets"
           [style.backgroundColor]="getCardBackgroundColor(ticket.color)"
@@ -176,7 +176,7 @@
       </button>
     </div>
     <div class="column-container--tasks">
-      <ul id="board-column-done">
+      <ul id="column-done">
         <li
           *ngFor="let ticket of doneTickets"
           [style.backgroundColor]="getCardBackgroundColor(ticket.color)"
