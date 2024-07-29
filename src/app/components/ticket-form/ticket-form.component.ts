@@ -19,12 +19,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 })
 export class TicketFormComponent implements OnInit {
     showOverlay: boolean = false;
+    today = new Date();
 
     ticket: TicketInterface = {
       title: '',
       description: '',
       priority: '',
-      due_date: new Date().toISOString().split('T')[0],
+      due_date: this.today,
       column_id: '',
       created_by: localStorage.getItem('user_id') || '',
       created_by_username: localStorage.getItem('username') || '',
@@ -43,12 +44,8 @@ columns: any;
     async onSubmit() {
       // Konvertiere dueDate in einen ISO-String
       if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
-        this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
+        this.ticket.due_date.toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
     }
-
-    // // Holen der user_id und des Benutzernamens aus dem lokalen Speicher
-    // this.ticket.created_by = localStorage.getItem('user_id') || '';
-    // this.ticket.created_by_username = localStorage.getItem('username') || '';
 
       // TODO: in Service aufrufen
       console.log('Submitting ticket:', this.ticket);
