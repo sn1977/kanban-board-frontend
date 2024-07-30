@@ -8,6 +8,9 @@ export class OverlayService {
     private displayOverlaySource = new BehaviorSubject<boolean>(false);
     public displayOverlay$ = this.displayOverlaySource.asObservable();
 
+    private currentTicketSource = new BehaviorSubject<any>(null);
+    public currentTicket$ = this.currentTicketSource.asObservable();
+
     showOverlay() {
         this.displayOverlaySource.next(true);
     }
@@ -15,4 +18,8 @@ export class OverlayService {
     hideOverlay() {
         this.displayOverlaySource.next(false);
     }
+
+    setCurrentTicket(ticket: any) {
+      this.currentTicketSource.next(ticket);
+  }
 }

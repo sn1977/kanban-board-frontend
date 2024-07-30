@@ -21,6 +21,8 @@ export class BoardComponent {
     doneTickets: any = [];
     error = "";
     showOverlay: boolean = false;
+    isEditMode: boolean = false; // Hinzugefügt: Modus für Bearbeitung
+    currentTicket: any = null; // Hinzugefügt: Aktuelles Ticket zur Bearbeitung
 
     constructor(
         private http: HttpClient,
@@ -48,12 +50,16 @@ export class BoardComponent {
     }
 
     toggleNewTicketOverlay() {
-        console.log("toggleNewTicketOverlay");
+        this.isEditMode = false; // Neues Ticket-Modus
+        this.currentTicket = null;
         this.overlayService.showOverlay();
     }
 
-    toggleEditTicketOverlay(tickets: any) {
-        console.log("toggleEditTaskOverlay");
+    toggleEditTicketOverlay(ticket: any) {
+        this.isEditMode = true; // Bearbeitungsmodus
+        this.currentTicket = { ...ticket }; // Kopiere das Ticket, um es zu bearbeiten
+        this.overlayService.setCurrentTicket(this.currentTicket);
+        this.overlayService.showOverlay();
     }
 
     toggleDeleteTicketOverlay(tickets: any) {
