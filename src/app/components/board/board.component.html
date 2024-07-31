@@ -225,8 +225,14 @@
 </div>
 
 <!-- <div *ngIf="showOverlay"> -->
-  <app-ticket-form *ngIf="showOverlay"></app-ticket-form>
+  <!-- <app-ticket-form *ngIf="showOverlay"></app-ticket-form> -->
 <!-- </div> -->
+
+<app-ticket-form
+  *ngIf="showOverlay"
+  [ticket]="currentTicket"
+  [isEditMode]="isEditMode"
+></app-ticket-form>
 
 <!-- <app-task-form
   *ngIf="overlayNewTaskState || overlayEditTaskState"

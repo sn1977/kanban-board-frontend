@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { TicketInterface } from "../models/ticket.model";
 
 @Injectable({
     providedIn: "root",
@@ -19,7 +20,8 @@ export class OverlayService {
         this.displayOverlaySource.next(false);
     }
 
-    setCurrentTicket(ticket: any) {
+    setCurrentTicket(ticket: TicketInterface | null) {
+      console.log("Setting current ticket:", ticket); // Debugging-Ausgabe
       this.currentTicketSource.next(ticket);
   }
 }

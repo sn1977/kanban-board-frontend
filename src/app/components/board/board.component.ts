@@ -5,6 +5,7 @@ import { lastValueFrom } from "rxjs";
 import { CommonModule, NgFor } from "@angular/common";
 import { OverlayService } from "../../services/overlay.service";
 import { TicketFormComponent } from "../ticket-form/ticket-form.component";
+import { TicketInterface } from "../../models/ticket.model";
 
 @Component({
     selector: "app-board",
@@ -48,26 +49,22 @@ export class BoardComponent {
         const url = environment.baseUrl + "/tickets/";
         return lastValueFrom(this.http.get(url));
     }
+   
+  toggleNewTicketOverlay() {
+    this.overlayService.setCurrentTicket(null); // Setze das aktuelle Ticket auf null
+    this.overlayService.showOverlay();
+  }
 
-    toggleNewTicketOverlay() {
-        this.isEditMode = false; // Neues Ticket-Modus
-        this.currentTicket = null;
-        this.overlayService.showOverlay();
-    }
-
-    toggleEditTicketOverlay(ticket: any) {
-        this.isEditMode = true; // Bearbeitungsmodus
-        this.currentTicket = { ...ticket }; // Kopiere das Ticket, um es zu bearbeiten
-        this.overlayService.setCurrentTicket(this.currentTicket);
-        this.overlayService.showOverlay();
-    }
-
+  toggleEditTicketOverlay(ticket: TicketInterface) {
+    console.log("Editing ticket:", ticket); // Debugging-Ausgabe
+    this.overlayService.setCurrentTicket(ticket); // Setze das aktuelle Ticket für die Bearbeitung
+    this.overlayService.showOverlay();
+  }
     toggleDeleteTicketOverlay(tickets: any) {
         console.log("toggleDeleteTicketOverlay");
     }
 
     getCardBackgroundColor(color: string) {
-        console.log("getCardBackgroundColor");
         return color;
     }
 

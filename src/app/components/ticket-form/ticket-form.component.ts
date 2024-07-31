@@ -5,6 +5,7 @@ import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 import { FormsModule } from "@angular/forms";
 import { TicketInterface } from "../../models/ticket.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
 
 @Component({
     selector: "app-ticket-form",
@@ -43,93 +44,94 @@ export class TicketFormComponent implements OnInit {
 
         this.overlayService.currentTicket$.subscribe((ticket) => {
             if (ticket) {
-                this.ticket = { ...ticket }; // Kopieren der Ticketdaten in das Formular
+                console.log("Received ticket for editing:", ticket); // Debugging-Ausgabe
+                this.ticket = { ...ticket }; // Kopiere das Ticket, um es im Formular anzuzeigen
+                this.isEditMode = true; // Setze den Modus auf Bearbeiten
+            } else {
+                this.resetTicketForm();
             }
         });
     }
 
-    //   async onSubmit() {
-    //     // Setze die Farbe basierend auf der Priorität
-    //     this.setColorBasedOnPriority();
+    resetTicketForm() {
+        this.isEditMode = false;
+        this.ticket = {
+            title: "",
+            description: "",
+            priority: "",
+            due_date: this.today,
+            column_id: "",
+            created_by: localStorage.getItem("user_id") || "",
+            created_by_username: localStorage.getItem("username") || "",
+            created_at: new Date().toISOString().split("T")[0],
+            color: "",
+        };
+    }
 
-    //     // Konvertiere due_date in einen ISO-String und stelle sicher, dass das Format YYYY-MM-DD ist
-    //     if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
-    //       this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0]; // Nur das Datum im Format 'YYYY-MM-DD'
-    //   }
+    onSubmit() {
+        console.log("isEditMode:", this.isEditMode);
+        if (this.isEditMode) {
+            this.updateTicket();
+        } else {
+            this.createTicket();
+        }
+    }
 
-    //     // TODO: in Service aufrufen
-    //     console.log('Submitting ticket:', this.ticket);
+    createTicket() {
+        this.setColorBasedOnPriority();
 
-    //     const token = localStorage.getItem('token');  // Token aus dem lokalen Speicher holen
-    //     const headers = new HttpHeaders({
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Token ${token}`
-    //     });
+        if (
+            typeof this.ticket.due_date === "object" &&
+            (this.ticket.due_date as any) instanceof Date
+        ) {
+            this.ticket.due_date = (this.ticket.due_date as Date)
+                .toISOString()
+                .split("T")[0];
+        }
 
-    // //     await this.http.post('http://127.0.0.1:8000/api/tickets/create/', JSON.stringify(this.ticket), { headers }).subscribe({
-    // //         next: (response) => {
-    // //             console.log('Ticket saved', response);
-    // //             this.cancel();
-    // //             this.reloadPage();
-    // //         },
-    // //         error: (error) => {
-    // //             console.error('Error saving ticket', error);
-    // //             if (error.error) {
-    // //                 console.error('Backend error details:', error.error);
-    // //             }
-    // //         }
-    // //     });
-    // // }
+        const token = localStorage.getItem("token");
+        const headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+        });
 
-    // const url = this.isEditMode ? `http://127.0.0.1:8000/api/tickets/${this.ticket.id}/` : 'http://127.0.0.1:8000/api/tickets/create/';
+        const url = "http://127.0.0.1:8000/api/tickets/create/";
+        this.http
+            .post(url, JSON.stringify(this.ticket), { headers })
+            .subscribe({
+                next: (response) => {
+                    console.log("Ticket created:", response);
+                    this.cancel();
+                    this.reloadPage();
+                },
+                error: (error) => {
+                    console.error("Error creating ticket:", error);
+                    if (error.error) {
+                        console.error("Backend error details:", error.error);
+                    }
+                },
+            });
+    }
 
-    //     await this.http.post(url, JSON.stringify(this.ticket), { headers }).subscribe({
-    //         next: (response) => {
-    //             console.log('Ticket saved', response);
-    //             this.cancel();
-    //             this.reloadPage();
-    //         },
-    //         error: (error) => {
-    //             console.error('Error saving ticket', error);
-    //             if (error.error) {
-    //                 console.error('Backend error details:', error.error);
-    //             }
-    //         }
-    //     });
-    // }
+    updateTicket() {
+        const url = `${environment.baseUrl}/tickets/${this.ticket.id}/`;
+        const token = localStorage.getItem("token");
+        const headers = new HttpHeaders({
+            "Content-Type": "application/json",
+            Authorization: `Token ${token}`,
+        });
 
-    async onSubmit() {
-      this.setColorBasedOnPriority();
-  
-      if (typeof this.ticket.due_date === 'object' && (this.ticket.due_date as any) instanceof Date) {
-          this.ticket.due_date = (this.ticket.due_date as Date).toISOString().split('T')[0];
-      }
-  
-      console.log('Submitting ticket:', this.ticket);
-  
-      const token = localStorage.getItem('token');
-      const headers = new HttpHeaders({
-          'Content-Type': 'application/json',
-          'Authorization': `Token ${token}`
-      });
-  
-      const url = this.isEditMode ? `http://127.0.0.1:8000/api/tickets/${this.ticket.id}/` : 'http://127.0.0.1:8000/api/tickets/create/';
-      const method = this.isEditMode ? 'PUT' : 'POST';
-  
-      await this.http.request(method, url, { body: JSON.stringify(this.ticket), headers }).subscribe({
-          next: (response) => {
-              console.log('Ticket saved', response);
-              this.cancel();
-              this.reloadPage();
-          },
-          error: (error) => {
-              console.error('Error saving ticket', error);
-              if (error.error) {
-                  console.error('Backend error details:', error.error);
-              }
-          }
-      });
-  }
+        this.http.put(url, this.ticket, { headers }).subscribe({
+            next: (response) => {
+                console.log("Ticket updated:", response);
+                this.cancel();
+                this.reloadPage();
+            },
+            error: (error) => {
+                console.error("Error updating ticket:", error);
+            },
+        });
+    }
 
     setColorBasedOnPriority() {
         switch (this.ticket.priority) {
