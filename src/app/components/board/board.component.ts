@@ -50,17 +50,28 @@ export class BoardComponent {
         const url = environment.baseUrl + "/tickets/";
         return lastValueFrom(this.http.get(url));
     }
-   
-  toggleNewTicketOverlay() {
-    this.overlayService.setCurrentTicket(null); // Setze das aktuelle Ticket auf null
-    this.overlayService.showOverlay();
+
+    toggleNewTicketOverlay() {
+        this.overlayService.setCurrentTicket(null); // Setze das aktuelle Ticket auf null
+        this.overlayService.showOverlay();
+    }
+
+    // toggleEditTicketOverlay(ticket: TicketInterface) {
+    //     console.log("Editing ticket:", ticket); // Debugging-Ausgabe
+    //     this.overlayService.setCurrentTicket(ticket); // Setze das aktuelle Ticket für die Bearbeitung
+    //     this.overlayService.showOverlay();
+    // }
+
+    toggleEditTicketOverlay(ticket: TicketInterface) {
+      console.log('Editing ticket:', ticket); // Log the full ticket object
+      if (!ticket) {
+          console.error('No ticket provided for editing.');
+          return;
+      }
+      this.overlayService.setCurrentTicket(ticket); // Pass the full ticket object
+      this.overlayService.showOverlay();
   }
 
-  toggleEditTicketOverlay(ticket: TicketInterface) {
-    console.log("Editing ticket:", ticket); // Debugging-Ausgabe
-    this.overlayService.setCurrentTicket(ticket); // Setze das aktuelle Ticket für die Bearbeitung
-    this.overlayService.showOverlay();
-  }
     toggleDeleteTicketOverlay(tickets: any) {
         console.log("toggleDeleteTicketOverlay");
     }
@@ -70,10 +81,17 @@ export class BoardComponent {
     }
 
     filterTicketsByColumn() {
-      this.todoTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-todo');
-      this.progressTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-progress');
-      this.feedbackTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-feedback');
-      this.doneTickets = this.tickets.filter((ticket: any) => ticket.column_id === 'column-done');
-  }
+        this.todoTickets = this.tickets.filter(
+            (ticket: any) => ticket.column_id === "column-todo"
+        );
+        this.progressTickets = this.tickets.filter(
+            (ticket: any) => ticket.column_id === "column-progress"
+        );
+        this.feedbackTickets = this.tickets.filter(
+            (ticket: any) => ticket.column_id === "column-feedback"
+        );
+        this.doneTickets = this.tickets.filter(
+            (ticket: any) => ticket.column_id === "column-done"
+        );
+    }
 }
-

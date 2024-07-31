@@ -20,8 +20,15 @@ export class OverlayService {
         this.displayOverlaySource.next(false);
     }
 
+    //   setCurrentTicket(ticket: TicketInterface | null) {
+    //     console.log("Setting current ticket:", ticket); // Debugging-Ausgabe
+    //     this.currentTicketSource.next(ticket);
+    // }
+
     setCurrentTicket(ticket: TicketInterface | null) {
-      console.log("Setting current ticket:", ticket); // Debugging-Ausgabe
-      this.currentTicketSource.next(ticket);
-  }
+        if (typeof ticket !== "object" || ticket === null) {
+            console.error("Invalid ticket object:", ticket);
+        }
+        this.currentTicketSource.next(ticket);
+    }
 }
