@@ -6,13 +6,14 @@ import { CommonModule, NgFor } from "@angular/common";
 import { OverlayService } from "../../services/overlay.service";
 import { TicketFormComponent } from "../ticket-form/ticket-form.component";
 import { TicketInterface } from "../../models/ticket.model";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
     selector: "app-board",
     standalone: true,
     templateUrl: "./board.component.html",
     styleUrl: "./board.component.scss",
-    imports: [NgFor, TicketFormComponent, CommonModule],
+    imports: [NgFor, TicketFormComponent, CommonModule, NavbarComponent],
 })
 export class BoardComponent {
     tickets: any = [];
