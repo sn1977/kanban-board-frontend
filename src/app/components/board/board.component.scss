@@ -82,3 +82,64 @@ li {
   flex-wrap: wrap;
   justify-content: center;
 }
+
+// /* Standard Layout */
+// .container {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .column {
+//   flex: 1;
+//   min-width: 300px; /* Minimum width for each column */
+// }
+
+// /* 2 Spalten Layout bei 1230px Breite */
+// @media (max-width: 1230px) {
+//   .column {
+//     flex: 0 0 50%; /* 50% Breite für 2 Spalten */
+//   }
+// }
+
+// /* 1 Spalte Layout bei 600px Breite */
+// @media (max-width: 600px) {
+//   .column {
+//     flex: 0 0 100%; /* 100% Breite für 1 Spalte */
+//   }
+// }
+
+// .board {
+//   display: grid;
+//   grid-template-columns: 1fr;
+//   gap: 20px;
+// }
+
+@media (max-width: 1230px) {
+  .board {
+    display: grid;
+    // grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .column {
+    width: 100% !important;
+  }
+
+
+ 
+//   .board > .column:nth-child(3),
+//   .board > .column:nth-child(4) {
+//     grid-column: span 2;
+//   }
+}
+
+@media (max-width: 600px) {
+  .board {
+    display: grid;
+    grid-template-columns: 1fr;
+    }
+
+  .ticket-card {
+    width: 95% !important;
+  }
+}
