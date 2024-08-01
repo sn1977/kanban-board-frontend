@@ -1,6 +1,5 @@
 .board {
   width: 100vw;
-  // max-width: calc(1920px - 1rem);
   height: calc(100vh - 65px - 1rem);
   background-color: var(--color-main);
   display: flex;
@@ -78,7 +77,6 @@ li {
 }
 
 .btn-card {
-  // border: 1px solid var(--bg-overlay);
   min-width: 45%;
   display: flex;
   flex-wrap: wrap;
