@@ -224,21 +224,8 @@
   </div>
 </div>
 
-<!-- <div *ngIf="showOverlay"> -->
-  <!-- <app-ticket-form *ngIf="showOverlay"></app-ticket-form> -->
-<!-- </div> -->
-
 <app-ticket-form
   *ngIf="showOverlay"
   [ticket]="currentTicket"
   [isEditMode]="isEditMode"
 ></app-ticket-form>
-
-<!-- <app-task-form
-  *ngIf="overlayNewTaskState || overlayEditTaskState"
-  [task]="currentTask"
-  [isEditMode]="isEditMode"
-  (formSubmit)="submitTask($event)"
-></app-task-form>
-
-<app-delete-task *ngIf="overlayDeleteTaskState"></app-delete-task> -->

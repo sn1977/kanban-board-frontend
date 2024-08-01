@@ -30,7 +30,7 @@ export class TicketFormComponent implements OnInit {
         color: "",
     };
 
-    @Input() isEditMode: boolean = false; // Modus: Neues Ticket oder Bearbeitung
+    @Input() isEditMode: boolean = false; 
 
     constructor(
         private overlayService: OverlayService,
@@ -41,39 +41,13 @@ export class TicketFormComponent implements OnInit {
         this.overlayService.displayOverlay$.subscribe((show) => {
             this.showOverlay = show;
         });
-
-        // this.overlayService.currentTicket$.subscribe((ticket) => {
-        //     if (ticket) {
-        //         console.log("Received ticket for editing:", ticket); // Debugging-Ausgabe
-        //         this.ticket = { ...ticket }; // Kopiere das Ticket, um es im Formular anzuzeigen
-        //         this.isEditMode = true; // Setze den Modus auf Bearbeiten
-        //     } else {
-        //         this.resetTicketForm();
-        //     }
-        // });
-
-      //   this.overlayService.currentTicket$.subscribe((ticket) => {
-      //     if (ticket) {
-      //         console.log('Received ticket for editing:', ticket); // Log the received ticket object
-      //         if (typeof ticket === 'object') {
-      //             console.log('Ticket properties:', Object.keys(ticket)); // Log the ticket properties
-      //         } else {
-      //             console.log('Ticket is not an object:', ticket);
-      //         }
-      //         this.ticket = { ...ticket }; // Use the spread operator to copy the ticket properties
-      //         this.isEditMode = true; // Set editing mode
-      //     } else {
-      //         console.log('Received null ticket, resetting form.');
-      //         this.resetTicketForm();
-      //     }
-      // });
-
+  
       this.overlayService.currentTicket$.subscribe((ticket) => {
         if (ticket) {
-          this.ticket = { ...ticket }; // Kopieren des gesamten Ticket-Objekts
-          this.isEditMode = true; // Setzen Sie den Modus auf Bearbeiten
+          this.ticket = { ...ticket }; 
+          this.isEditMode = true; 
         } else {
-          this.resetTicketForm(); // Reset-Funktion für neues Ticket
+          this.resetTicketForm(); 
         }
       });
     }
@@ -94,7 +68,6 @@ export class TicketFormComponent implements OnInit {
     }
 
     onSubmit() {
-        console.log("isEditMode:", this.isEditMode);
         if (this.isEditMode) {
             this.updateTicket();
         } else {
