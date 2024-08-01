@@ -23,8 +23,8 @@ export class BoardComponent {
     doneTickets: any = [];
     error = "";
     showOverlay: boolean = false;
-    isEditMode: boolean = false; // Hinzugefügt: Modus für Bearbeitung
-    currentTicket: any = null; // Hinzugefügt: Aktuelles Ticket zur Bearbeitung
+    isEditMode: boolean = false; 
+    currentTicket: any = null; 
 
     constructor(
         private http: HttpClient,
@@ -39,7 +39,6 @@ export class BoardComponent {
         try {
             this.tickets = await this.getTickets();
             this.filterTicketsByColumn();
-            console.log(this.tickets);
         } catch (error) {
             this.error = "Fehler beim Laden!";
         }
@@ -56,24 +55,41 @@ export class BoardComponent {
         this.overlayService.showOverlay();
     }
 
-    // toggleEditTicketOverlay(ticket: TicketInterface) {
-    //     console.log("Editing ticket:", ticket); // Debugging-Ausgabe
-    //     this.overlayService.setCurrentTicket(ticket); // Setze das aktuelle Ticket für die Bearbeitung
-    //     this.overlayService.showOverlay();
+    toggleEditTicketOverlay(ticket: TicketInterface) {
+        this.overlayService.setCurrentTicket(ticket); // Setze das aktuelle Ticket für die Bearbeitung
+        this.overlayService.showOverlay();
+    }
+
+    // toggleDeleteTicketOverlay(tickets: any) {
+    //     console.log("toggleDeleteTicketOverlay");
     // }
 
-    toggleEditTicketOverlay(ticket: TicketInterface) {
-      console.log('Editing ticket:', ticket); // Log the full ticket object
+    toggleDeleteTicketOverlay(ticket: TicketInterface) {
       if (!ticket) {
-          console.error('No ticket provided for editing.');
-          return;
+        console.error('No ticket provided for deletion.');
+        return;
       }
-      this.overlayService.setCurrentTicket(ticket); // Pass the full ticket object
-      this.overlayService.showOverlay();
-  }
-
-    toggleDeleteTicketOverlay(tickets: any) {
-        console.log("toggleDeleteTicketOverlay");
+  
+      if (confirm(`Möchten Sie das Ticket "${ticket.title}" wirklich löschen?`)) {
+        const url = `${environment.baseUrl}/tickets/${ticket.id}/`;
+        const token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Token ${token}`);
+        
+        this.http.delete(url, { headers }).subscribe({
+          next: () => {
+            console.log(`Ticket ${ticket.id} deleted successfully`);
+            this.removeTicketFromView(ticket);
+          },
+          error: (error) => {
+            console.error(`Error deleting ticket ${ticket.id}`, error);
+          }
+        });
+      }
+    }
+  
+    removeTicketFromView(ticket: TicketInterface) {
+      this.tickets = this.tickets.filter((t: TicketInterface) => t.id !== ticket.id);
+      this.filterTicketsByColumn();
     }
 
     getCardBackgroundColor(color: string) {
