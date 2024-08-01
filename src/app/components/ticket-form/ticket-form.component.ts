@@ -19,6 +19,9 @@ export class TicketFormComponent implements OnInit {
     showOverlay: boolean = false;
     today = new Date();
 
+    /**
+     * Represents a ticket object.
+     */
     @Input() ticket: TicketInterface = {
         title: "",
         description: "",
@@ -31,6 +34,9 @@ export class TicketFormComponent implements OnInit {
         color: "",
     };
 
+    /**
+     * Indicates whether the component is in edit mode or not.
+     */
     @Input() isEditMode: boolean = false; 
 
     constructor(
@@ -39,6 +45,11 @@ export class TicketFormComponent implements OnInit {
         private ticketService: TicketService
     ) {}
 
+    /**
+     * Initializes the component after Angular has initialized all data-bound properties.
+     * Subscribes to the displayOverlay$ and currentTicket$ observables from the overlayService.
+     * Updates the component's state based on the emitted values.
+     */
     ngOnInit() {
         this.overlayService.displayOverlay$.subscribe((show) => {
             this.showOverlay = show;
@@ -54,6 +65,9 @@ export class TicketFormComponent implements OnInit {
       });
     }
 
+    /**
+     * Resets the ticket form to its initial state.
+     */
     resetTicketForm() {
         this.isEditMode = false;
         this.ticket = {
@@ -69,6 +83,11 @@ export class TicketFormComponent implements OnInit {
         };
     }
 
+    /**
+     * Handles the form submission event.
+     * If the component is in edit mode, it calls the updateTicket method.
+     * Otherwise, it calls the createTicket method.
+     */
     onSubmit() {
         if (this.isEditMode) {
             this.updateTicket();
@@ -77,6 +96,9 @@ export class TicketFormComponent implements OnInit {
         }
     }
 
+    /**
+     * Creates a new ticket.
+     */
     createTicket() {
         this.setColorBasedOnPriority();
 
@@ -109,6 +131,11 @@ export class TicketFormComponent implements OnInit {
         });
     }
 
+    /**
+     * Updates the ticket by calling the ticket service's updateTicket method.
+     * After a successful update, it cancels the form and reloads the page.
+     * If an error occurs, it logs the error to the console.
+     */
     updateTicket() {
       this.ticketService.updateTicket(this.ticket).subscribe({
         next: (response) => {
@@ -121,6 +148,9 @@ export class TicketFormComponent implements OnInit {
       });
     }
 
+    /**
+     * Sets the color of the ticket based on its priority.
+     */
     setColorBasedOnPriority() {
         switch (this.ticket.priority) {
             case "Low":
@@ -138,10 +168,16 @@ export class TicketFormComponent implements OnInit {
         }
     }
 
+    /**
+     * Cancels the ticket form and hides the overlay.
+     */
     cancel() {
         this.overlayService.hideOverlay();
     }
 
+    /**
+     * Reloads the current page.
+     */
     reloadPage() {
         window.location.reload();
     }
