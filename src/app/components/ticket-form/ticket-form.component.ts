@@ -97,7 +97,6 @@ export class TicketFormComponent implements OnInit {
 
         this.ticketService.createTicket(this.ticket).subscribe({
           next: (response) => {
-            console.log("Ticket created:", response);
             this.cancel();
             this.reloadPage();
           },
@@ -113,7 +112,6 @@ export class TicketFormComponent implements OnInit {
     updateTicket() {
       this.ticketService.updateTicket(this.ticket).subscribe({
         next: (response) => {
-          console.log("Ticket updated:", response);
           this.cancel();
           this.reloadPage();
         },

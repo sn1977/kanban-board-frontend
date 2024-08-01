@@ -20,7 +20,6 @@ export class OverlayService {
         this.displayOverlaySource.next(false);
     }
 
-    // TODO - move to service --> TicketService
     setCurrentTicket(ticket: TicketInterface | null) {
         this.currentTicketSource.next(ticket);
     }
