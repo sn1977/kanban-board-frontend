@@ -6,6 +6,7 @@ import { FormsModule } from "@angular/forms";
 import { TicketInterface } from "../../models/ticket.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { TicketService } from "../../services/ticket.service";
 
 @Component({
     selector: "app-ticket-form",
@@ -34,7 +35,8 @@ export class TicketFormComponent implements OnInit {
 
     constructor(
         private overlayService: OverlayService,
-        private http: HttpClient
+        private http: HttpClient,
+        private ticketService: TicketService
     ) {}
 
     ngOnInit() {
@@ -93,42 +95,32 @@ export class TicketFormComponent implements OnInit {
             Authorization: `Token ${token}`,
         });
 
-        const url = "http://127.0.0.1:8000/api/tickets/create/";
-        this.http
-            .post(url, JSON.stringify(this.ticket), { headers })
-            .subscribe({
-                next: (response) => {
-                    console.log("Ticket created:", response);
-                    this.cancel();
-                    this.reloadPage();
-                },
-                error: (error) => {
-                    console.error("Error creating ticket:", error);
-                    if (error.error) {
-                        console.error("Backend error details:", error.error);
-                    }
-                },
-            });
+        this.ticketService.createTicket(this.ticket).subscribe({
+          next: (response) => {
+            console.log("Ticket created:", response);
+            this.cancel();
+            this.reloadPage();
+          },
+          error: (error) => {
+            console.error("Error creating ticket:", error);
+            if (error.error) {
+              console.error("Backend error details:", error.error);
+            }
+          }
+        });
     }
 
     updateTicket() {
-        const url = `${environment.baseUrl}/tickets/${this.ticket.id}/`;
-        const token = localStorage.getItem("token");
-        const headers = new HttpHeaders({
-            "Content-Type": "application/json",
-            Authorization: `Token ${token}`,
-        });
-
-        this.http.put(url, this.ticket, { headers }).subscribe({
-            next: (response) => {
-                console.log("Ticket updated:", response);
-                this.cancel();
-                this.reloadPage();
-            },
-            error: (error) => {
-                console.error("Error updating ticket:", error);
-            },
-        });
+      this.ticketService.updateTicket(this.ticket).subscribe({
+        next: (response) => {
+          console.log("Ticket updated:", response);
+          this.cancel();
+          this.reloadPage();
+        },
+        error: (error) => {
+          console.error("Error updating ticket:", error);
+        }
+      });
     }
 
     setColorBasedOnPriority() {

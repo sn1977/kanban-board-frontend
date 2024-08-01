@@ -78,7 +78,7 @@
             <div class="card-body--section">
               <p class="card-text--info">
                 <span>Erstellt von: </span
-                ><span>{{ ticket.author_username }}</span>
+                ><span>{{ ticket.created_by_username }}</span>
               </p>
               <p class="card-text--info">
                 <span>Erstellt am: </span><span>{{ ticket.created_at }}</span>
@@ -133,7 +133,7 @@
             <div class="card-body--section">
               <p class="card-text--info">
                 <span>Erstellt von: </span
-                ><span>{{ ticket.author_username }}</span>
+                ><span>{{ ticket.created_by_username }}</span>
               </p>
               <p class="card-text--info">
                 <span>Erstellt am: </span><span>{{ ticket.created_at }}</span>
@@ -188,7 +188,7 @@
             <div class="card-body--section">
               <p class="card-text--info">
                 <span>Erstellt von: </span
-                ><span>{{ ticket.author_username }}</span>
+                ><span>{{ ticket.created_by_username }}</span>
               </p>
               <p class="card-text--info">
                 <span>Erstellt am: </span><span>{{ ticket.created_at }}</span>
@@ -226,6 +226,6 @@
 
 <app-ticket-form
   *ngIf="showOverlay"
-  [ticket]="currentTicket"
+  [ticket]?="currentTicket"
   [isEditMode]="isEditMode"
 ></app-ticket-form>
