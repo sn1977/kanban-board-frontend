@@ -13,10 +13,21 @@ import { Router } from "@angular/router";
 export class LoginComponent {
     username: string = "";
     password: string = "";
+    isSubmitting: boolean = false;
 
     constructor(private authService: AuthService, private router: Router) {}
 
+    /**
+     * Logs in the user with the provided username and password.
+     * Disables input fields and buttons during the login process.
+     * If the login is successful, stores the token, user ID, and username in the local storage.
+     * Navigates to the "board" route.
+     * If an error occurs during the login process, displays an alert with the message "Login Failed"
+     * and logs the error to the console.
+     * Enables input fields and buttons after the login process is complete.
+     */
     async login() {
+      this.isSubmitting = true; // Deaktivieren der Eingabefelder und Schaltflächen
         try {
             let resp: any = await this.authService.loginWithUsernameAndPassword(
                 this.username,
@@ -30,7 +41,9 @@ export class LoginComponent {
         } catch (error) {
             alert('Login Failed');
             console.error(error);
-        }
-        //TODO - disable input fields & button and enable after try catch block is done
+        } finally {
+          this.isSubmitting = false; // Reaktivieren der Eingabefelder und Schaltflächen
+      }
+        
     }
 }
