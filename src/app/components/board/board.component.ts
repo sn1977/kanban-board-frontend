@@ -60,15 +60,9 @@ export class BoardComponent {
         this.overlayService.showOverlay();
     }
 
-    // toggleDeleteTicketOverlay(tickets: any) {
-    //     console.log("toggleDeleteTicketOverlay");
-    // }
 
     toggleDeleteTicketOverlay(ticket: TicketInterface) {
-      if (!ticket) {
-        console.error('No ticket provided for deletion.');
-        return;
-      }
+
   
       if (confirm(`Möchten Sie das Ticket "${ticket.title}" wirklich löschen?`)) {
         const url = `${environment.baseUrl}/tickets/${ticket.id}/`;
