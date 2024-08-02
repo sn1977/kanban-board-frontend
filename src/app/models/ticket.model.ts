@@ -1,5 +1,5 @@
 export interface TicketInterface {
-  id?: number; // Optionales Feld für die Ticket-ID
+  id?: number; 
   title: string;
   description: string;
   priority: string;

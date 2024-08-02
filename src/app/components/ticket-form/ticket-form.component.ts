@@ -37,7 +37,7 @@ export class TicketFormComponent implements OnInit {
     /**
      * Indicates whether the component is in edit mode or not.
      */
-    @Input() isEditMode: boolean = false; 
+    @Input() isEditMode: boolean = false;
 
     constructor(
         private overlayService: OverlayService,
@@ -54,15 +54,20 @@ export class TicketFormComponent implements OnInit {
         this.overlayService.displayOverlay$.subscribe((show) => {
             this.showOverlay = show;
         });
-  
-      this.overlayService.currentTicket$.subscribe((ticket) => {
-        if (ticket) {
-          this.ticket = { ...ticket }; 
-          this.isEditMode = true; 
-        } else {
-          this.resetTicketForm(); 
-        }
-      });
+
+        this.overlayService.currentTicket$.subscribe((ticket) => {
+            if (ticket) {
+                this.ticket = { ...ticket };
+                this.isEditMode = true;
+
+                // Konvertiere due_date in ein JavaScript-Datum, falls es ein String ist
+                if (typeof this.ticket.due_date === "string") {
+                    this.ticket.due_date = new Date(this.ticket.due_date);
+                }
+            } else {
+                this.resetTicketForm();
+            }
+        });
     }
 
     /**
@@ -118,16 +123,16 @@ export class TicketFormComponent implements OnInit {
         });
 
         this.ticketService.createTicket(this.ticket).subscribe({
-          next: (response) => {
-            this.cancel();
-            this.reloadPage();
-          },
-          error: (error) => {
-            console.error("Error creating ticket:", error);
-            if (error.error) {
-              console.error("Backend error details:", error.error);
-            }
-          }
+            next: (response) => {
+                this.cancel();
+                this.reloadPage();
+            },
+            error: (error) => {
+                console.error("Error creating ticket:", error);
+                if (error.error) {
+                    console.error("Backend error details:", error.error);
+                }
+            },
         });
     }
 
@@ -137,15 +142,15 @@ export class TicketFormComponent implements OnInit {
      * If an error occurs, it logs the error to the console.
      */
     updateTicket() {
-      this.ticketService.updateTicket(this.ticket).subscribe({
-        next: (response) => {
-          this.cancel();
-          this.reloadPage();
-        },
-        error: (error) => {
-          console.error("Error updating ticket:", error);
-        }
-      });
+        this.ticketService.updateTicket(this.ticket).subscribe({
+            next: (response) => {
+                this.cancel();
+                this.reloadPage();
+            },
+            error: (error) => {
+                console.error("Error updating ticket:", error);
+            },
+        });
     }
 
     /**
