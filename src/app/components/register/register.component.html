@@ -1,0 +1,51 @@
+<div class="register">
+  <div class="register-card">
+    <form (ngSubmit)="register()">
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingUsername"
+          placeholder="Username"
+          name="username"
+          [(ngModel)]="username"
+          [disabled]="isSubmitting"
+          required
+        />
+        <label for="floatingUsername">Username</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="password"
+          [disabled]="isSubmitting"
+          required
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          class="form-control"
+          id="floatingConfirmPassword"
+          placeholder="Confirm Password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          [disabled]="isSubmitting"
+          required
+        />
+        <label for="floatingConfirmPassword">Confirm Password</label>
+      </div>
+      <div class="form-floating">
+        <button type="submit" class="btn btn-primary btn-individual" [disabled]="isSubmitting">
+          Register
+        </button>
+      </div>
+      <p>Already have an account? <a routerLink="/login">Login here</a></p>
+    </form>
+  </div>
+</div>

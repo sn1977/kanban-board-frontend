@@ -23,4 +23,16 @@ export class AuthService {
         };
         return lastValueFrom(this.http.post(url, body));
     }
+
+    /**
+   * Registers a new user with the provided username and password.
+   * @param {string} username - The desired username of the new user.
+   * @param {string} password - The desired password of the new user.
+   * @returns {Promise<any>} - A promise that resolves with the response from the registration request.
+   */
+  public register(username: string, password: string): Promise<any> {
+    const url = environment.baseUrl + "/register/";
+    const body = { username, password };
+    return lastValueFrom(this.http.post(url, body));
+  }
 }
